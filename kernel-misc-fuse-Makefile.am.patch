@@ -1,0 +1,28 @@
+--- fuse-3.1.1/util/Makefile.am~	2017-08-13 10:11:40.000000000 +0200
++++ fuse-3.1.1/util/Makefile.am	2017-08-13 10:12:53.514733029 +0200
+@@ -15,14 +15,6 @@ mount_util.c: $(top_srcdir)/lib/mount_ut
+ 
+ mount_fuse3_SOURCES = mount.fuse.c
+ 
+-install-exec-hook:
+-	-chmod u+s $(DESTDIR)$(bindir)/fusermount3
+-	@if test ! -e $(DESTDIR)/dev/fuse; then \
+-		$(MKDIR_P) $(DESTDIR)/dev; \
+-		echo "mknod $(DESTDIR)/dev/fuse -m 0666 c 10 229 || true"; \
+-		mknod $(DESTDIR)/dev/fuse -m 0666 c 10 229 || true; \
+-	fi
+-
+ EXTRA_DIST = udev.rules init_script meson.build install_helper.sh
+ 
+ MOUNT_FUSE_PATH = @MOUNT_FUSE_PATH@
+@@ -34,10 +26,6 @@ install-exec-local:
+ 	$(INSTALL_PROGRAM) $(builddir)/mount.fuse3 $(DESTDIR)$(MOUNT_FUSE_PATH)/mount.fuse3
+ 	$(MKDIR_P) $(DESTDIR)$(INIT_D_PATH)
+ 	$(INSTALL_SCRIPT) $(srcdir)/init_script $(DESTDIR)$(INIT_D_PATH)/fuse3
+-	@if test -x /usr/sbin/update-rc.d; then \
+-		echo "/usr/sbin/update-rc.d fuse start 34 S . start 41 0 6 . || true"; \
+-		/usr/sbin/update-rc.d fuse start 34 S . start 41 0 6 . || true; \
+-	fi
+ 
+ install-data-local:
+ 	$(MKDIR_P) $(DESTDIR)$(UDEV_RULES_PATH)
