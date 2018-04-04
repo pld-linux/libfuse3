@@ -1,14 +1,13 @@
 Summary:	Filesystem in Userspace
 Summary(pl.UTF-8):	System plików w przestrzeni użytkownika
 Name:		libfuse3
-Version:	3.2.1
+Version:	3.2.2
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/libfuse/libfuse/releases
 Source0:	https://github.com/libfuse/libfuse/releases/download/fuse-%{version}/fuse-%{version}.tar.xz
-# Source0-md5:	5dc79e3b7e0afbd6f8c5c335405227d1
-Source1:	fuse.conf
+# Source0-md5:	4ca3306c042f1c841991e50a93b22a61
 Patch0:		%{name}-build.patch
 URL:		https://github.com/libfuse/libfuse
 BuildRequires:	meson
@@ -77,8 +76,6 @@ mv -f $RPM_BUILD_ROOT%{_libdir}/libfuse3.so.* $RPM_BUILD_ROOT/%{_lib}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libfuse3.so
 ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo libfuse3.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libfuse3.so
-
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}
 
 mv $RPM_BUILD_ROOT{%{_sbindir},/sbin}/mount.fuse3
 mv $RPM_BUILD_ROOT%{_mandir}/man8/mount.fuse{,3}.8.gz
