@@ -11,6 +11,8 @@ Source0:	https://github.com/libfuse/libfuse/releases/download/fuse-%{version}/fu
 Patch0:		%{name}-build.patch
 URL:		https://github.com/libfuse/libfuse
 BuildRequires:	meson
+# for --default_library=both
+BuildRequires:	rpmbuild(macros) >= 1.732
 BuildRequires:	sed >= 4.0
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
@@ -36,16 +38,28 @@ montowania własnych implementacji systemów plików przez zwykłych
 Ten pakiet zawiera bibliotekę współdzieloną.
 
 %package devel
-Summary:	Filesytem in Userspace - Development header files
+Summary:	Filesystem in Userspace - Development header files
 Summary(pl.UTF-8):	System plików w przestrzeni użytkownika - pliki nagłówkowe
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Libfuse library header files.
+Libfuse3 library header files.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki libfuse.
+Pliki nagłówkowe biblioteki libfuse3.
+
+%package static
+Summary:	Filesystem in Userspace - static library
+Summary(pl.UTF-8):	System plików w przestrzeni użytkownika - biblioteka statyczna
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static libfuse3 library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka libfuse3.
 
 %prep
 %setup -q -n fuse-%{version}
@@ -72,18 +86,18 @@ install -d $RPM_BUILD_ROOT{/%{_lib},%{_sysconfdir},/sbin}
 
 %meson_install -C build
 
-mv -f $RPM_BUILD_ROOT%{_libdir}/libfuse3.so.* $RPM_BUILD_ROOT/%{_lib}
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/libfuse3.so.* $RPM_BUILD_ROOT/%{_lib}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libfuse3.so
 ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo libfuse3.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libfuse3.so
 
-mv $RPM_BUILD_ROOT{%{_sbindir},/sbin}/mount.fuse3
+%{__mv} $RPM_BUILD_ROOT{%{_sbindir},/sbin}/mount.fuse3
 
 # part of default udev rules nowdays
-rm $RPM_BUILD_ROOT/lib/udev/rules.d/99-fuse3.rules
+%{__rm} $RPM_BUILD_ROOT/lib/udev/rules.d/99-fuse3.rules
 
 # not needed
-rm $RPM_BUILD_ROOT/etc/init.d/fuse3
+%{__rm} $RPM_BUILD_ROOT/etc/init.d/fuse3
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -110,3 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libfuse3.so
 %{_includedir}/fuse3
 %{_pkgconfigdir}/fuse3.pc
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libfuse3.a
