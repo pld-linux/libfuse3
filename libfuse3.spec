@@ -10,7 +10,7 @@ Source0:	https://github.com/libfuse/libfuse/releases/download/fuse-%{version}/fu
 # Source0-md5:	68eac68b19997bea69c4d94f110003f0
 Patch0:		%{name}-build.patch
 URL:		https://github.com/libfuse/libfuse
-BuildRequires:	meson >= 0.38
+BuildRequires:	meson >= 0.42
 # for --default_library=both
 BuildRequires:	rpmbuild(macros) >= 1.732
 BuildRequires:	sed >= 4.0
