@@ -1,6 +1,7 @@
 Summary:	Filesystem in Userspace
 Summary(pl.UTF-8):	System plików w przestrzeni użytkownika
 Name:		libfuse3
+# NOTE: fuse-3.9.4 tag from 20200809 points to 3.9.3 release
 Version:	3.9.3
 Release:	1
 License:	LGPL v2 (library), GPL v2 (tools)
@@ -11,9 +12,11 @@ Source0:	https://github.com/libfuse/libfuse/releases/download/fuse-%{version}/fu
 Patch0:		%{name}-build.patch
 URL:		https://github.com/libfuse/libfuse
 BuildRequires:	meson >= 0.42
-# for --default_library=both
-BuildRequires:	rpmbuild(macros) >= 1.732
+BuildRequires:	ninja >= 1.5
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -117,7 +120,7 @@ PATH=$(pwd)/ld-dir:$PATH
 %meson build \
 	-Duseroot=false
 
-%meson_build -C build
+%ninja_build -C build
 
 %{?with_tests:%meson_test -C build}
 
@@ -125,7 +128,7 @@ PATH=$(pwd)/ld-dir:$PATH
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/%{_lib},%{_sysconfdir},/sbin}
 
-%meson_install -C build
+%ninja_install -C build
 
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/libfuse3.so.* $RPM_BUILD_ROOT/%{_lib}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libfuse3.so
