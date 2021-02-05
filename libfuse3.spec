@@ -122,7 +122,7 @@ PATH=$(pwd)/ld-dir:$PATH
 
 %ninja_build -C build
 
-%{?with_tests:%meson_test -C build}
+%{?with_tests:%ninja_test -C build}
 
 %install
 rm -rf $RPM_BUILD_ROOT
