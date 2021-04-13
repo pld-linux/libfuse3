@@ -1,7 +1,6 @@
 Summary:	Filesystem in Userspace
 Summary(pl.UTF-8):	System plików w przestrzeni użytkownika
 Name:		libfuse3
-# NOTE: fuse-3.9.4 tag from 20200809 points to 3.9.3 release
 Version:	3.10.3
 Release:	1
 License:	LGPL v2 (library), GPL v2 (tools)
