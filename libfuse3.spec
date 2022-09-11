@@ -1,14 +1,13 @@
 Summary:	Filesystem in Userspace
 Summary(pl.UTF-8):	System plików w przestrzeni użytkownika
 Name:		libfuse3
-Version:	3.11.0
+Version:	3.12.0
 Release:	1
 License:	LGPL v2 (library), GPL v2 (tools)
 Group:		Applications/System
 #Source0Download: https://github.com/libfuse/libfuse/releases
 Source0:	https://github.com/libfuse/libfuse/releases/download/fuse-%{version}/fuse-%{version}.tar.xz
-# Source0-md5:	c9987e2c366655e2d3d9e1f7aaba3c0d
-Patch0:		%{name}-build.patch
+# Source0-md5:	2640cd55b3c2a2eb9e78054f77f5c87a
 URL:		https://github.com/libfuse/libfuse
 BuildRequires:	meson >= 0.42
 BuildRequires:	ninja >= 1.5
@@ -106,7 +105,6 @@ Narzędzia do montowania systemów plików opartych na FUSE 3.
 
 %prep
 %setup -q -n fuse-%{version}
-%patch0 -p1
 
 %{__sed} -i '/FUSERMOUNT_PROG/s,fusermount3,%{_bindir}/fusermount3,' lib/mount.c
 
@@ -118,6 +116,7 @@ install -d ld-dir
 PATH=$(pwd)/ld-dir:$PATH
 
 %meson build \
+	-Dinitscriptdir= \
 	-Duseroot=false
 
 %ninja_build -C build
@@ -139,9 +138,6 @@ ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libfuse3.so.*.*) \
 
 # part of default udev rules nowdays
 %{__rm} $RPM_BUILD_ROOT/lib/udev/rules.d/99-fuse3.rules
-
-# not needed
-%{__rm} $RPM_BUILD_ROOT/etc/init.d/fuse3
 
 %clean
 rm -rf $RPM_BUILD_ROOT
