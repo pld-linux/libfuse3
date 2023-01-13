@@ -11,6 +11,7 @@ Source0:	https://github.com/libfuse/libfuse/releases/download/fuse-%{version}/fu
 URL:		https://github.com/libfuse/libfuse
 BuildRequires:	meson >= 0.42
 BuildRequires:	ninja >= 1.5
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
