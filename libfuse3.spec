@@ -111,10 +111,6 @@ Narzędzia do montowania systemów plików opartych na FUSE 3.
 
 %{__sed} -i '/FUSERMOUNT_PROG/s,fusermount3,%{_bindir}/fusermount3,' lib/mount.c
 
-# gold is missing base versioning
-install -d ld-dir
-[ ! -x /usr/bin/ld.bfd ] || ln -sf /usr/bin/ld.bfd ld-dir/ld
-
 %build
 PATH=$(pwd)/ld-dir:$PATH
 
