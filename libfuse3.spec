@@ -12,6 +12,7 @@ URL:		https://github.com/libfuse/libfuse
 BuildRequires:	meson >= 0.50
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
@@ -66,6 +67,7 @@ Statyczna biblioteka libfuse3.
 Summary:	API documentation for FUSE 3 library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki FUSE 3
 Group:		Documentation
+BuildArch:	noarch
 
 %description apidocs
 API documentation for FUSE 3 library.
