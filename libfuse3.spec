@@ -112,8 +112,6 @@ Narzędzia do montowania systemów plików opartych na FUSE 3.
 %{__sed} -i '/FUSERMOUNT_PROG/s,fusermount3,%{_bindir}/fusermount3,' lib/mount.c
 
 %build
-PATH=$(pwd)/ld-dir:$PATH
-
 %meson build \
 	-Dinitscriptdir= \
 	-Duseroot=false
