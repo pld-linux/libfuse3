@@ -13,7 +13,7 @@ BuildRequires:	meson >= 0.51
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
 BuildRequires:	udev-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -110,19 +110,19 @@ Narzędzia do montowania systemów plików opartych na FUSE 3.
 %{__sed} -i '/FUSERMOUNT_PROG/s,fusermount3,%{_bindir}/fusermount3,' lib/mount.c
 
 %build
-%meson build \
+%meson \
 	-Dinitscriptdir= \
 	-Duseroot=false
 
-%ninja_build -C build
+%meson_build
 
-%{?with_tests:%ninja_test -C build}
+%{?with_tests:%meson_test}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/%{_lib},%{_sysconfdir},/sbin}
 
-%ninja_install -C build
+%meson_install
 
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/libfuse3.so.* $RPM_BUILD_ROOT/%{_lib}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libfuse3.so
