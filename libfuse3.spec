@@ -111,7 +111,7 @@ Narzędzia do montowania systemów plików opartych na FUSE 3.
 
 %build
 %meson \
-	-Dexamples=true \
+	-Dexamples=false \
 	-Dinitscriptdir= \
 	-Duseroot=false
 
