@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	static_libs	# static libraries
+
 Summary:	Filesystem in Userspace
 Summary(pl.UTF-8):	System plików w przestrzeni użytkownika
 Name:		libfuse3
@@ -111,6 +115,7 @@ Narzędzia do montowania systemów plików opartych na FUSE 3.
 
 %build
 %meson \
+	%{!?with_static_libs:--default-library=shared} \
 	-Dexamples=false \
 	-Dinitscriptdir= \
 	-Duseroot=false
@@ -156,9 +161,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/fuse3
 %{_pkgconfigdir}/fuse3.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libfuse3.a
+%endif
 
 %files apidocs
 %defattr(644,root,root,755)
