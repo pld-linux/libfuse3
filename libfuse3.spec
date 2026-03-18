@@ -5,13 +5,13 @@
 Summary:	Filesystem in Userspace
 Summary(pl.UTF-8):	System plików w przestrzeni użytkownika
 Name:		libfuse3
-Version:	3.18.1
+Version:	3.18.2
 Release:	1
 License:	LGPL v2 (library), GPL v2 (tools)
 Group:		Applications/System
 #Source0Download: https://github.com/libfuse/libfuse/releases
 Source0:	https://github.com/libfuse/libfuse/releases/download/fuse-%{version}/fuse-%{version}.tar.gz
-# Source0-md5:	07038308fe76c04f7544526b2becd734
+# Source0-md5:	43c6f6cd2c1368d916f6fb080eb39cbb
 URL:		https://github.com/libfuse/libfuse
 BuildRequires:	meson >= 0.60.0
 BuildRequires:	ninja >= 1.5
